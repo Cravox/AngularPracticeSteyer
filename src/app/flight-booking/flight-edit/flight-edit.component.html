@@ -6,3 +6,24 @@
 <p>
     ShowDetail: {{showDetails}}
 </p>
+
+<form [formGroup]="formGroup">
+    <div class="form-group">
+        <label>Id:</label>
+        <input formControlName="id" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label>From:</label>
+        <input formControlName="from" class="form-control">
+        <div class="error" *ngIf="formGroup.controls['from'].valid">
+            Validierungsfehler!
+        </div>"
+        <div class="error" *ngIf="formGroup.controls['from'].hasError('required')">
+            Pflichtfeld!
+        </div>
+        <div class="error" *ngIf="formGroup.controls['from'].hasError('minlength')">
+            Min. 3 Zeichen
+        </div>
+    </div>
+</form>
