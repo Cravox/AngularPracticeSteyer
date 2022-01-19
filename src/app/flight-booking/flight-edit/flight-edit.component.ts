@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,14 +13,17 @@ export class FlightEditComponent implements OnInit {
   formGroup: FormGroup;
 
 
-  constructor(private route: ActivatedRoute) {
-    this.formGroup = new FormGroup({
-      id: new FormControl(),
-      from: new FormControl('Graz',
-      [Validators.required, Validators.minLength(3)]),
-      to: new FormControl('Hamburg'),
-      date: new FormControl(),
-      delayed: new FormControl(false)
+  constructor(private route: ActivatedRoute,
+              private fb: FormBuilder) {
+    this.formGroup = fb.group({
+      id: [],
+      from: [
+        'Graz',
+        [Validators.required, Validators.minLength(3)],
+      ],
+      to: ['Hamburg'],
+      date: [],
+      delayed: []
     });
 
     this.formGroup.statusChanges.subscribe(

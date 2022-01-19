@@ -12,5 +12,5 @@ export abstract class AbstractAddress {
         return this.street + ", " + this.zipCode + ", " + this.city;
     }
 
-    abstract toCSV(): string; // Abstrakte Methoden: Nur Signatur keine Implementierung ---- (Unterschied Interface?)
+    abstract toCSV(): string; // Abstrakte Methoden: Nur Signatur keine Implementierung
 }
