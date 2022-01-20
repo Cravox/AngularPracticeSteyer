@@ -13,33 +13,36 @@
         <input formControlName="id" class="form-control">
     </div>
 
-    <div class="form-group">
+    <fieldset formGroupName="route">
+        <div class ="error" *ngIf="routeFormGroup.hasError('roundTrip')">
+            Round Trips are not supported!
+        </div>
+
         <label>From:</label>
         <input formControlName="from" class="form-control">
+        
         <div class="error" *ngIf="formGroup.controls['from'].valid === false">
             Validation error!
         </div>
         <div class="error" *ngIf="formGroup.controls['from'].pending">
-            Validating form
+            Validating form <div class=""></div>
         </div>
         <div class="error" *ngIf="formGroup.controls['from'].hasError('asyncCity')">
-            There is no flight for this city
+            There is no flight for this city!
         </div>
         <div class="error" *ngIf="formGroup.controls['from'].hasError('required')">
             Pflichtfeld!
         </div>
         <div class="error" *ngIf="formGroup.controls['from'].hasError('minlength')">
-            Min. 3 Zeichen
+            Min. 3 Zeichen!
         </div>
         <div class="error" *ngIf="formGroup.controls['from'].hasError('city')">
             This city is not supported!
         </div>
-    </div>
 
-    <div class="form-group">
         <label>To:</label>
         <input formControlName="to" class="form-control">
-    </div>
+    </fieldset>
 
     <div class ="form-group">
         <label>Date:</label>
@@ -51,6 +54,16 @@
         &nbsp;
         <label>Delayed</label>
     </div>
+
+    <fieldset formArrayName="categories">
+        <div *ngFor="let group of categoriesFormArray.controls; let i = index"
+            [formGroupName]="i" class="form-group">
+            <label>Category Name:</label>
+            <input formControlName="categoryName" class="form-control">
+            <label>Base Price:</label>
+            <input formControlName="basePrice" class="form-control">
+        </div>
+    </fieldset>
 
     <button class="btn btn-default" (click)="save()">Save</button>
 </form>

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FlightService } from 'src/app/flight.service';
 import { cityValidator } from 'src/app/shared/validation/city-validator';
 import { asyncCityValidator } from 'src/app/shared/validation/reactive/async-city-validator';
 import { cityWithParamsValidator } from 'src/app/shared/validation/reactive/city-with-params-validator';
+import { roundTripValidator } from 'src/app/shared/validation/reactive/round-trip-validator';
 
 @Component({
   selector: 'app-flight-edit',
@@ -15,11 +16,15 @@ export class FlightEditComponent implements OnInit {
   id = 0;
   showDetails = false;
   formGroup: FormGroup;
+  routeFormGroup: FormGroup;
+  categoriesFormArray: FormArray;
 
   constructor(private route: ActivatedRoute,
               private fb: FormBuilder,
               private flightService: FlightService) {
-    this.formGroup = fb.group({
+    this.categoriesFormArray = fb.array([]);
+
+    this.routeFormGroup = fb.group({
       id: [],
       from: [
         'Graz',
@@ -30,6 +35,16 @@ export class FlightEditComponent implements OnInit {
         [asyncCityValidator(flightService)]
       ],
       to: ['Hamburg'],
+      date: [],
+      delayed: [],
+      categores: this.categoriesFormArray
+    }, {
+      validators: [roundTripValidator()]
+    });
+
+    this.formGroup = fb.group({
+      id: [],
+      route: this.routeFormGroup,
       date: [],
       delayed: []
     });
@@ -61,5 +76,14 @@ export class FlightEditComponent implements OnInit {
     this.route.fragment.subscribe(p => {
       console.debug('fragment', p);
     });
+  }
+
+  addCategory(): void {
+    this.categoriesFormArray.push(
+      this.fb.group({
+        categorieName: [],
+        basePrice: []
+      })
+    );
   }
 }
