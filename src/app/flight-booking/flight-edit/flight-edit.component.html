@@ -16,8 +16,14 @@
     <div class="form-group">
         <label>From:</label>
         <input formControlName="from" class="form-control">
-        <div class="error" *ngIf="formGroup.controls['from'].valid">
-            Validierungsfehler!
+        <div class="error" *ngIf="formGroup.controls['from'].valid === false">
+            Validation error!
+        </div>
+        <div class="error" *ngIf="formGroup.controls['from'].pending">
+            Validating form
+        </div>
+        <div class="error" *ngIf="formGroup.controls['from'].hasError('asyncCity')">
+            There is no flight for this city
         </div>
         <div class="error" *ngIf="formGroup.controls['from'].hasError('required')">
             Pflichtfeld!

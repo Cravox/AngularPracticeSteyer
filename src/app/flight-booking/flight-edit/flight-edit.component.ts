@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { FlightService } from 'src/app/flight.service';
 import { cityValidator } from 'src/app/shared/validation/city-validator';
+import { asyncCityValidator } from 'src/app/shared/validation/reactive/async-city-validator';
+import { cityWithParamsValidator } from 'src/app/shared/validation/reactive/city-with-params-validator';
 
 @Component({
   selector: 'app-flight-edit',
@@ -13,14 +16,18 @@ export class FlightEditComponent implements OnInit {
   showDetails = false;
   formGroup: FormGroup;
 
-
   constructor(private route: ActivatedRoute,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private flightService: FlightService) {
     this.formGroup = fb.group({
       id: [],
       from: [
         'Graz',
-        [Validators.required, Validators.minLength(3), cityValidator],
+        [Validators.required,
+         Validators.minLength(3),
+         cityWithParamsValidator(['Tripsdrill','Graz', 'Hamburg', 'Zürich'])
+        ],
+        [asyncCityValidator(flightService)]
       ],
       to: ['Hamburg'],
       date: [],
