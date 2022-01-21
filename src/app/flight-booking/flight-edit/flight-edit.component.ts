@@ -18,6 +18,12 @@ export class FlightEditComponent implements OnInit {
   formGroup: FormGroup;
   routeFormGroup: FormGroup;
   categoriesFormArray: FormArray;
+  metaData = [
+    { label: 'FlugNummer', name: 'id', type: 'text'},
+    { label: 'Route', name: 'route', type: 'readonly'},
+    { label: 'Date', name: 'date', type: 'text'},
+    { label: 'delayed', name: 'delayed', type: 'checkbox'},
+  ];
 
   constructor(private route: ActivatedRoute,
               private fb: FormBuilder,
@@ -35,9 +41,6 @@ export class FlightEditComponent implements OnInit {
         [asyncCityValidator(flightService)]
       ],
       to: ['Hamburg'],
-      date: [],
-      delayed: [],
-      categores: this.categoriesFormArray
     }, {
       validators: [roundTripValidator()]
     });
@@ -46,7 +49,8 @@ export class FlightEditComponent implements OnInit {
       id: [],
       route: this.routeFormGroup,
       date: [],
-      delayed: []
+      delayed: [],
+      categories: this.categoriesFormArray
     });
 
     this.formGroup.statusChanges.subscribe(
@@ -81,7 +85,7 @@ export class FlightEditComponent implements OnInit {
   addCategory(): void {
     this.categoriesFormArray.push(
       this.fb.group({
-        categorieName: [],
+        categoryName: [],
         basePrice: []
       })
     );

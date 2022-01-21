@@ -21,22 +21,22 @@
         <label>From:</label>
         <input formControlName="from" class="form-control">
         
-        <div class="error" *ngIf="formGroup.controls['from'].valid === false">
+        <div class="error" *ngIf="!routeFormGroup.controls['from'].valid">
             Validation error!
         </div>
-        <div class="error" *ngIf="formGroup.controls['from'].pending">
+        <div class="error" *ngIf="routeFormGroup.controls['from'].pending">
             Validating form <div class=""></div>
         </div>
-        <div class="error" *ngIf="formGroup.controls['from'].hasError('asyncCity')">
+        <div class="error" *ngIf="routeFormGroup.controls['from'].hasError('asyncCity')">
             There is no flight for this city!
         </div>
-        <div class="error" *ngIf="formGroup.controls['from'].hasError('required')">
+        <div class="error" *ngIf="routeFormGroup.controls['from'].hasError('required')">
             Pflichtfeld!
         </div>
-        <div class="error" *ngIf="formGroup.controls['from'].hasError('minlength')">
+        <div class="error" *ngIf="routeFormGroup.controls['from'].hasError('minlength')">
             Min. 3 Zeichen!
         </div>
-        <div class="error" *ngIf="formGroup.controls['from'].hasError('city')">
+        <div class="error" *ngIf="routeFormGroup.controls['from'].hasError('city')">
             This city is not supported!
         </div>
 
@@ -65,5 +65,21 @@
         </div>
     </fieldset>
 
+    <button class ="btn btn-default" (click)="addCategory()">Add Category</button>
     <button class="btn btn-default" (click)="save()">Save</button>
+</form>
+
+<h2>Dynamic Form</h2>
+
+<form [formGroup]="formGroup">
+    <div class="form-group" *ngFor="let item of metaData">
+        <label>{{item.label}}:</label>
+        <input *ngIf="item.type === 'text'" [formControlName]="item.name"
+                class="form-control">
+        <input *ngIf="item.type === 'checkbox'" [formControlName]="item.name"
+                type="checkbox">
+        <div *ngIf="item.type === 'readonly'">
+            {{ formGroup.controls[item.name].value | json }}
+        </div>
+    </div>
 </form>
