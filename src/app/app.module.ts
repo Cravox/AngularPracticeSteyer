@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
 import { BasketComponent } from './basket/basket.component';
 import { APP_BASE_HREF } from '@angular/common';
+import { FlightTypeaheadComponent } from './flight-typeahead/flight-typeahead.component';
 
 @NgModule({
    imports: [
@@ -27,7 +28,8 @@ import { APP_BASE_HREF } from '@angular/common';
       HomeComponent,
       AboutComponent,
       NotFoundComponent,
-      BasketComponent
+      BasketComponent,
+      FlightTypeaheadComponent
    ],
    providers: [
       {
